@@ -86,7 +86,7 @@ public class OutilCorrection {
                         suggestiontext += suggestions.get(j);
                     }
                     else {
-                        suggestiontext += ',' + suggestions.get(j);
+                        suggestiontext += ", " + suggestions.get(j);
                     }
                 }
                 text += suggestiontext + "] ";
