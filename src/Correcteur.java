@@ -15,7 +15,7 @@ public class Correcteur {
 
 
         try {
-            FileReader fileReader = new FileReader(path);
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path),"UTF-8");
             Scanner s = new Scanner(fileReader);
             s.useDelimiter("\\b");
 
@@ -40,7 +40,7 @@ public class Correcteur {
 
     public static void initDictionnaire(String path){
         try {
-            FileReader fileReader = new FileReader(path);
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path),"UTF-8");
             BufferedReader br = new BufferedReader(fileReader);
 
             String ligne;
