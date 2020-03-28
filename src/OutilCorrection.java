@@ -18,8 +18,7 @@ public class OutilCorrection {
 
         for (int i = 0; i < mots.length()-1; i++) {
             for (int j = 0; j < alphabet.length; j++) {
-                String new_mot = mots.substring(0, i) + alphabet[j] + mots.substring(i , mots.length() );
-                //System.out.println(new_mot);
+                String new_mot = mots.substring(0, i) + alphabet[j] + mots.substring(i+1, mots.length() );
                 correctionCandidat.add(new_mot);
             }
         }
@@ -31,7 +30,6 @@ public class OutilCorrection {
 
         for(int i = 0 ; i < mots.length()-1 ; i++){
             String new_mot = mots.substring(0,i) + mots.substring(i+1,mots.length());
-            //System.out.println(new_mot);
             correctionCandidat.add(new_mot);
         }
         return correctionCandidat;
@@ -44,7 +42,6 @@ public class OutilCorrection {
         for (int i = 0; i < mots.length(); i++) {
             for (int j = 0; j < alphabet.length; j++) {
                 String new_mot = mots.substring(0, i) + alphabet[j] + mots.substring(i , mots.length() );
-                //System.out.println(new_mot);
                 correctionCandidat.add(new_mot);
             }
         }
@@ -88,17 +85,10 @@ public class OutilCorrection {
                         suggestiontext+="["+ motNonCorriges.get(i)+ " => ";
                         suggestiontext += suggestions.get(j);
                     }
-
-                    else if(j == suggestions.size()-1) {
-                        suggestiontext += suggestions.get(j);
-
-                    }
-
                     else {
-                        suggestiontext += suggestions.get(j)+",";
+                        suggestiontext += ',' + suggestions.get(j);
                     }
                 }
-
                 text += suggestiontext + "] ";
             }
 
