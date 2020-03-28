@@ -95,7 +95,7 @@ public class OutilCorrection {
                     }
 
                     else {
-                        suggestiontext += suggestions.get(j);
+                        suggestiontext += suggestions.get(j)+",";
                     }
                 }
 
