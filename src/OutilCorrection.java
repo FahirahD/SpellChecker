@@ -14,7 +14,7 @@ public class OutilCorrection {
 
     private  Set<String> remplacerChqCaractere(String mots){
         Set<String> correctionCandidat = new HashSet<>();
-        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'".toCharArray();
 
         for (int i = 0; i < mots.length()-1; i++) {
             for (int j = 0; j < alphabet.length; j++) {
@@ -39,7 +39,7 @@ public class OutilCorrection {
 
     private Set<String>ajouterCaractere(String mots) {
         Set<String> correctionCandidat = new HashSet<>();
-        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'".toCharArray();
 
         for (int i = 0; i < mots.length(); i++) {
             for (int j = 0; j < alphabet.length; j++) {
