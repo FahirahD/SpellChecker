@@ -5,17 +5,17 @@ import java.util.regex.Pattern;
 public class Correcteur {
 
     private static ArrayList<String> ensembleMots = new ArrayList<>();
-    private static Map<String ,Integer> directionaire = new HashMap<>();
+    private static Map<String, Integer> directionaire = new HashMap<>();
 
 
-    public static void initMotNonCorriges(String path){
+    public static void initMotNonCorriges(String path) {
 
         Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F]+");
         Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F]+");
 
 
         try {
-            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path),"UTF-8");
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
             Scanner s = new Scanner(fileReader);
             s.useDelimiter("\\b");
 
@@ -38,15 +38,15 @@ public class Correcteur {
 
     }
 
-    public static void initDictionnaire(String path){
+    public static void initDictionnaire(String path) {
         try {
-            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path),"UTF-8");
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
             BufferedReader br = new BufferedReader(fileReader);
 
             String ligne;
 
-            while((ligne = br.readLine()) != null) {
-                directionaire.put(ligne,0);
+            while ((ligne = br.readLine()) != null) {
+                directionaire.put(ligne, 0);
             }
 
             br.close();
@@ -67,12 +67,9 @@ public class Correcteur {
         initMotNonCorriges(args[0]);
         initDictionnaire(args[1]);
 
-        OutilCorrection o = new OutilCorrection(ensembleMots,directionaire);
+        OutilCorrection o = new OutilCorrection(ensembleMots, directionaire);
 
         System.out.println(o.corrigerMots());
-
-
-
 
 
     }
