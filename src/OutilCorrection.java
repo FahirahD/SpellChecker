@@ -82,7 +82,7 @@ public class OutilCorrection {
                         suggestiontext += "[" + motNonCorriges.get(i) + " => ";
                         suggestiontext += suggestions.get(j);
                     } else {
-                        suggestiontext += ", " + suggestions.get(j);
+                        suggestiontext += "," + suggestions.get(j);
                     }
                 }
                 text += suggestiontext + "] ";
