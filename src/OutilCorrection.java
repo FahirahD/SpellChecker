@@ -47,7 +47,6 @@ public class OutilCorrection {
         return correctionCandidat;
     }
 
-
     public String corrigerMots() {
 
         String text = "";
@@ -89,6 +88,5 @@ public class OutilCorrection {
             }
         }
         return text;
-
     }
 }
