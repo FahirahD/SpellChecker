@@ -10,28 +10,31 @@ public class Correcteur {
 
     public static void initMotNonCorriges(String path) {
 
-        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F]+");
-        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F]+");
+        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F\\-']+");
+        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F\\']+");
 
 
         try {
             InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
             Scanner s = new Scanner(fileReader);
             s.useDelimiter("\\b");
-
+            String mot = "";
             while (s.hasNext(patternMot)) {
                 // Lire un mot
-                String mot = s.next(patternMot);
-                //System.out.println("Mot: " + mot);
-                ensembleMots.add(mot);
-
+                mot += s.next(patternMot);
+                System.out.println("Mot: " + mot);
                 // Lire un séparateur
                 String separateur = s.next(patternSeparateur);
-                //System.out.println("Séparateur: " + separateur);
+                System.out.println(separateur);
+                if (separateur.equals("-") || separateur.equals("'") ){
+                    System.out.println("im in");
+                    mot+=separateur;
+                    continue;
+                }
+                ensembleMots.add(mot);
+                mot="";
             }
-
             s.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

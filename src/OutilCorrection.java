@@ -7,7 +7,7 @@ public class OutilCorrection {
     private char[] alphabet;
 
     public OutilCorrection(ArrayList<String> mots, Map<String, Integer> dictionaire) {
-        this.alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'".toCharArray();
+        this.alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'’ʼ".toCharArray();
         this.motNonCorriges = mots;
         this.directionaire = dictionaire;
 
@@ -37,10 +37,14 @@ public class OutilCorrection {
 
     private Set<String> ajouterCaractere(String mots) {
         Set<String> correctionCandidat = new HashSet<>();
-
+        String new_mot = "";
         for (int i = 0; i < mots.length(); i++) {
             for (int j = 0; j < this.alphabet.length; j++) {
-                String new_mot = mots.substring(0, i) + this.alphabet[j] + mots.substring(i, mots.length());
+                if ( i == mots.length()-1){
+                    new_mot = mots.substring(0, i) + mots.substring(i, mots.length())+this.alphabet[j];
+                    correctionCandidat.add(new_mot);
+                }
+                new_mot = mots.substring(0, i) + this.alphabet[j] + mots.substring(i, mots.length());
                 correctionCandidat.add(new_mot);
             }
         }
