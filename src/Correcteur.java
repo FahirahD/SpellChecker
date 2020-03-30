@@ -4,9 +4,6 @@ import java.util.regex.Pattern;
 
 public class Correcteur {
 
-    private static ArrayList<String> ensembleMots = new ArrayList<>();
-    private static Map<String, Integer> directionaire = new HashMap<>();
-
     public static Map<String, Integer> createDictionnaire(String path) {
 
         Map<String, Integer> dictionaire = new HashMap<>();
@@ -36,8 +33,8 @@ public class Correcteur {
             System.exit(-1);
         }
 
-        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F\\-']+");
-        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F\\']+");
+        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F']+");
+        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F']+");
 
         String correction = "";
         OutilCorrection o = new OutilCorrection(createDictionnaire(args[1]));
