@@ -2,14 +2,14 @@ import java.util.*;
 
 public class OutilCorrection {
 
-    private ArrayList<String> motNonCorriges = new ArrayList<>();
-    private Map<String, Integer> directionaire = new HashMap<>();
+    private Map<String, Integer> directionaire ;
     private char[] alphabet;
+    private ArrayList<String> suggestions;
 
-    public OutilCorrection(ArrayList<String> mots, Map<String, Integer> dictionaire) {
+    public OutilCorrection( Map<String, Integer> dictionaire) {
         this.alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'’ʼ".toCharArray();
-        this.motNonCorriges = mots;
         this.directionaire = dictionaire;
+        this.suggestions = new ArrayList<>();
 
     }
 
@@ -51,45 +51,43 @@ public class OutilCorrection {
         return correctionCandidat;
     }
 
-    public String corrigerMots() {
+    public String corrigerMots(String mots) {
 
-        String text = "";
-
-        for (int i = 0; i < this.motNonCorriges.size(); i++) {
-
-
+            this.suggestions.clear();
             Set<String> correctionCandidat = new HashSet<>();
-            ArrayList<String> suggestions = new ArrayList<>();
 
-            if (directionaire.containsKey(motNonCorriges.get(i).toLowerCase())) {
-                text += motNonCorriges.get(i) + " ";
-                continue;
+            if (!this.directionaire.containsKey(mots.toLowerCase())) {
+                correctionCandidat.addAll(ajouterCaractere(mots));
+                correctionCandidat.addAll(retirerChqCaractere(mots));
+                correctionCandidat.addAll(remplacerChqCaractere(mots));
+            }
+            else {
+                return mots;
             }
 
-            correctionCandidat.addAll(ajouterCaractere(motNonCorriges.get(i)));
-            correctionCandidat.addAll(retirerChqCaractere(motNonCorriges.get(i)));
-            correctionCandidat.addAll(remplacerChqCaractere(motNonCorriges.get(i)));
-
             for (String candidat : correctionCandidat) {
-                if (directionaire.containsKey(candidat.toLowerCase())) {
+                if (this.directionaire.containsKey(candidat.toLowerCase())) {
                     suggestions.add(candidat);
                 }
             }
+        return formSuggestionString(mots);
+    }
 
-            if (suggestions.isEmpty()) {
-                text += "[" + motNonCorriges.get(i) + " => (?)]";
-            } else {
-                String suggestiontext = "";
-                for (int j = 0; j < suggestions.size(); j++) {
-                    if (j == 0) {
-                        suggestiontext += "[" + motNonCorriges.get(i) + " => ";
-                        suggestiontext += suggestions.get(j);
-                    } else {
-                        suggestiontext += "," + suggestions.get(j);
-                    }
+    private String formSuggestionString( String mot){
+        String text = "";
+        if (this.suggestions.isEmpty()) {
+            text += "[" + mot + " => (?)]";
+        } else {
+            String suggestiontext = "";
+            for (int j = 0; j < this.suggestions.size(); j++) {
+                if (j == 0) {
+                    suggestiontext += "[" + mot + " => ";
+                    suggestiontext += this.suggestions.get(j);
+                } else {
+                    suggestiontext += "," + this.suggestions.get(j);
                 }
-                text += suggestiontext + "] ";
             }
+            text += suggestiontext + "]";
         }
         return text;
     }

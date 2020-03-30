@@ -7,41 +7,10 @@ public class Correcteur {
     private static ArrayList<String> ensembleMots = new ArrayList<>();
     private static Map<String, Integer> directionaire = new HashMap<>();
 
+    public static Map<String, Integer> createDictionnaire(String path) {
 
-    public static void initMotNonCorriges(String path) {
+        Map<String, Integer> dictionaire = new HashMap<>();
 
-        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F\\-']+");
-        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F\\']+");
-
-
-        try {
-            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
-            Scanner s = new Scanner(fileReader);
-            s.useDelimiter("\\b");
-            String mot = "";
-            while (s.hasNext(patternMot)) {
-                // Lire un mot
-                mot += s.next(patternMot);
-                System.out.println("Mot: " + mot);
-                // Lire un séparateur
-                String separateur = s.next(patternSeparateur);
-                System.out.println(separateur);
-                if (separateur.equals("-") || separateur.equals("'") ){
-                    System.out.println("im in");
-                    mot+=separateur;
-                    continue;
-                }
-                ensembleMots.add(mot);
-                mot="";
-            }
-            s.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static void initDictionnaire(String path) {
         try {
             InputStreamReader fileReader = new InputStreamReader(new FileInputStream(path), "UTF-8");
             BufferedReader br = new BufferedReader(fileReader);
@@ -49,7 +18,7 @@ public class Correcteur {
             String ligne;
 
             while ((ligne = br.readLine()) != null) {
-                directionaire.put(ligne, 0);
+                dictionaire.put(ligne, 0);
             }
 
             br.close();
@@ -57,8 +26,8 @@ public class Correcteur {
             e.printStackTrace();
         }
 
+        return dictionaire;
     }
-
 
     public static void main(String[] args) {
 
@@ -67,13 +36,33 @@ public class Correcteur {
             System.exit(-1);
         }
 
-        initMotNonCorriges(args[0]);
-        initDictionnaire(args[1]);
+        Pattern patternMot = Pattern.compile("[a-zA-Z\\u00C0-\\u017F\\-']+");
+        Pattern patternSeparateur = Pattern.compile("[^a-zA-Z\\u00C0-\\u017F\\']+");
 
-        OutilCorrection o = new OutilCorrection(ensembleMots, directionaire);
+        String correction = "";
+        OutilCorrection o = new OutilCorrection(createDictionnaire(args[1]));
 
-        System.out.println(o.corrigerMots());
-
-
+        try {
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(args[0]), "UTF-8");
+            Scanner s = new Scanner(fileReader);
+            s.useDelimiter("\\b");
+            String mot = "";
+            while (s.hasNext(patternMot)) {
+                // Lire un mot
+                mot += s.next(patternMot);
+                // Lire un séparateur
+                String separateur = s.next(patternSeparateur);
+                if (separateur.equals("-") || separateur.equals("'") || separateur.equals("’") || separateur.equals("ʼ")){
+                    mot+=separateur;
+                    continue;
+                }
+                correction+= o.corrigerMots(mot)+separateur;
+                mot="";
+            }
+            s.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(correction);
     }
 }
