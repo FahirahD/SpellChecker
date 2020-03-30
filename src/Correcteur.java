@@ -52,12 +52,12 @@ public class Correcteur {
                 mot += s.next(patternMot);
                 // Lire un séparateur
                 String separateur = s.next(patternSeparateur);
-                if (separateur.equals("-") || separateur.equals("'") || separateur.equals("’") || separateur.equals("ʼ")){
-                    mot+=separateur;
+                if (separateur.equals("-") || separateur.equals("'") || separateur.equals("’") || separateur.equals("ʼ")) {
+                    mot += separateur;
                     continue;
                 }
-                correction+= o.corrigerMots(mot)+separateur;
-                mot="";
+                correction += o.corrigerMots(mot) + separateur;
+                mot = "";
             }
             s.close();
         } catch (IOException e) {

@@ -2,11 +2,11 @@ import java.util.*;
 
 public class OutilCorrection {
 
-    private Map<String, Integer> directionaire ;
+    private Map<String, Integer> directionaire;
     private char[] alphabet;
     private ArrayList<String> suggestions;
 
-    public OutilCorrection( Map<String, Integer> dictionaire) {
+    public OutilCorrection(Map<String, Integer> dictionaire) {
         this.alphabet = "abcdefghijklmnopqrstuvwxyzàèìòùáéíóúýâêîôûãñõäëïöüÿç-'’ʼ".toCharArray();
         this.directionaire = dictionaire;
         this.suggestions = new ArrayList<>();
@@ -40,8 +40,8 @@ public class OutilCorrection {
         String new_mot = "";
         for (int i = 0; i < mots.length(); i++) {
             for (int j = 0; j < this.alphabet.length; j++) {
-                if ( i == mots.length()-1){
-                    new_mot = mots.substring(0, i) + mots.substring(i, mots.length())+this.alphabet[j];
+                if (i == mots.length() - 1) {
+                    new_mot = mots.substring(0, i) + mots.substring(i, mots.length()) + this.alphabet[j];
                     correctionCandidat.add(new_mot);
                 }
                 new_mot = mots.substring(0, i) + this.alphabet[j] + mots.substring(i, mots.length());
@@ -53,27 +53,26 @@ public class OutilCorrection {
 
     public String corrigerMots(String mots) {
 
-            this.suggestions.clear();
-            Set<String> correctionCandidat = new HashSet<>();
+        this.suggestions.clear();
+        Set<String> correctionCandidat = new HashSet<>();
 
-            if (!this.directionaire.containsKey(mots.toLowerCase())) {
-                correctionCandidat.addAll(ajouterCaractere(mots));
-                correctionCandidat.addAll(retirerChqCaractere(mots));
-                correctionCandidat.addAll(remplacerChqCaractere(mots));
-            }
-            else {
-                return mots;
-            }
+        if (!this.directionaire.containsKey(mots.toLowerCase())) {
+            correctionCandidat.addAll(ajouterCaractere(mots));
+            correctionCandidat.addAll(retirerChqCaractere(mots));
+            correctionCandidat.addAll(remplacerChqCaractere(mots));
+        } else {
+            return mots;
+        }
 
-            for (String candidat : correctionCandidat) {
-                if (this.directionaire.containsKey(candidat.toLowerCase())) {
-                    suggestions.add(candidat);
-                }
+        for (String candidat : correctionCandidat) {
+            if (this.directionaire.containsKey(candidat.toLowerCase())) {
+                suggestions.add(candidat);
             }
+        }
         return formSuggestionString(mots);
     }
 
-    private String formSuggestionString( String mot){
+    private String formSuggestionString(String mot) {
         String text = "";
         if (this.suggestions.isEmpty()) {
             text += "[" + mot + " => (?)]";
